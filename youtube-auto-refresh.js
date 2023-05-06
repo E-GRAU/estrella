@@ -11,7 +11,6 @@
 // ==/UserScript==
 
 // cdn https://e-grau.github.io/estrella/youtube-auto-refresh.js
-
 (function() {
     'use strict';
 
@@ -39,11 +38,8 @@
         window.location.href = "https://www.youtube.com/";
     }
 
- 
+
     window.onload = function() {
-
-
-
 
         setInterval(() => {
 
