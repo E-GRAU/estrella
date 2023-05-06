@@ -7,10 +7,10 @@
 // @match        https://www.youtube.com*
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
+// @require      https://e-grau.github.io/estrella/youtube-auto-refresh.js
 // @grant        none
 // ==/UserScript==
 
-// cdn https://e-grau.github.io/estrella/youtube-auto-refresh.js
 (function() {
     'use strict';
 
