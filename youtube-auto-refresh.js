@@ -39,11 +39,7 @@
         window.location.href = "https://www.youtube.com/";
     }
 
-    window.addEventListener('popstate', function(event) {
-        // The URL changed...
-        console.log("The URL changed...", window.location.href);
-    });
-
+ 
     window.onload = function() {
 
 
