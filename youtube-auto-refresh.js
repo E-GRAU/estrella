@@ -9,6 +9,9 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // ==/UserScript==
+
+// cdn https://e-grau.github.io/estrella/youtube-auto-refresh.js
+
 (function() {
     'use strict';
 
