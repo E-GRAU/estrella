@@ -8,6 +8,7 @@
 // @icon         https://www.google.com/s2/favicons?domain=web.app
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
 // @require      https://nesmdev.github.io/ndev/dist/ndev.1.0.9.js
+// @require      https://e-grau.github.io/estrella/llamafood-nuevo.js
 // @grant        none
 // ==/UserScript==
 
