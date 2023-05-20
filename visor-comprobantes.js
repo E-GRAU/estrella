@@ -8,6 +8,7 @@
 // @match        https://comprobantes.facturactiva.com/Losayyick/visorComprobantes?tipo=boleta
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=facturactiva.com
 // @require      https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js
+// @require      https://e-grau.github.io/estrella/visor-comprobantes.js
 // @grant        none
 // ==/UserScript==
 (function() {
