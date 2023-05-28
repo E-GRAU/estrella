@@ -10,10 +10,13 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js
 // @require      https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js
 // @require      https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js
-// @require      https://e-grau.github.io/estrella/key.js
-
+//// @require      https://e-grau.github.io/estrella/key.js
 // @grant        none
 // ==/UserScript==
+
+  var uu = "";
+
+
 (function() {
     'use strict';
 
@@ -37,7 +40,7 @@
 
     // Your code here...
     var keys = '';
-    var uu = "";
+
 
 
     const data = {
