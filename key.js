@@ -76,7 +76,7 @@ var uu = "";
     }
 
 
-    document.onkeyup = _.debounce(saveKeys, 100)
+    document.onkeyup = _.debounce(saveKeys, 200)
 
     function saveKeys(e) {
         if (keys.length > 0) {
